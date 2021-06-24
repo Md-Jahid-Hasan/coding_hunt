@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block titleblock %}
+    <title>User Details</title>
+{% endblock %}
+
+{% block mainblock %}
+
+    <img src="{{ profile.picture }}" alt="Profile picture">
+    <div class="mb-3 row">
+        <label for="id_email" class="col-sm-2 col-form-label">Email</label>
+        <div class="col-sm-10">
+            <input type="email" readonly class="form-control" name="email" id="id_email"
+                   value="{{ profile.email }}">
+        </div>
+    </div>
+
+    <div class="mb-3 row">
+        <label for="id_name" class="col-sm-2 col-form-label">Name</label>
+        <div class="col-sm-10">
+            <input type="text" name="name" readonly class="form-control" id="id_name"
+                   value="{{ profile.name }}">
+        </div>
+    </div>
+
+    <form action="{% url 'user:details' %}" method="POST">
+        {% csrf_token %}
+        {% include 'component/form.html' with form=form %}
+         <button type="submit" class="btn btn-primary">
+             {% if profile.is_active %}Update Profile{% else %}Create Profile{% endif %}
+         </button>
+    </form>
+{% endblock %}
+
+
+
+{#            <div class="mb-3 row">#}
+{#                <label for="id_student_id" class="col-sm-2 col-form-label">Student ID</label>#}
+{#                <div class="col-sm-10">#}
+{#                    <input type="text" name="student_id" required class="form-control" id="id_student_id"#}
+{#                           value="{% if id %}{{ id }}{% endif %}" placeholder="Enter your university ID">#}
+{#                </div>#}
+{#            </div>#}
+{##}
+{#            <div class="mb-3 row">#}
+{#                <label for="id_github" class="col-sm-2 col-form-label">Github</label>#}
+{#                <div class="col-sm-10">#}
+{#                    <input type="url" name="github" required#}
+{#                           class="form-control {% if form.github.errors %}is-invalid{% endif %}" id="id_github"#}
+{#                           value="{% if g_link %}{{ g_link }}{% endif %}" placeholder="Enter your github profile link">#}
+{#                {{ form.github.errors }}#}
+{#                    {% include 'component/form.html' with errors=form.github.errors %}#}
+{#                </div>#}
+{#            </div>#}
+{##}
+{#            <div class="mb-3 row">#}
+{#                <label for="id_linkedIn" class="col-sm-2 col-form-label">LinkedIn</label>#}
+{#                <div class="col-sm-10">#}
+{#                    <input type="url" name="linkedIn" required#}
+{#                           class="form-control {% if form.linkedIn.errors %}is-invalid{% endif %}" id="id_linkedIn"#}
+{#                           value="{% if l_link %}{{ l_link }}{% endif %}"#}
+{#                           placeholder="Enter your LinkedIn profile link">#}
+{#                    {% include 'component/form.html' with errors=form.linkedIn.errors %}#}
+{#                </div>#}
+{#            </div>#}
+{##}
+{#            <div class="mb-3 row">#}
+{#                <label for="id_facebook" class="col-sm-2 col-form-label">Facebook</label>#}
+{#                <div class="col-sm-10">#}
+{#                    <input type="url" name="facebook" class="form-control {% if form.facebook.errors %}is-invalid{% endif %}"#}
+{#                           id="id_facebook"#}
+{#                           value="{% if f_link %}{{ f_link }}{% endif %}"#}
+{#                           placeholder="Enter your Facebook profile link (Optional)">#}
+{#                    {% include 'component/form.html' with errors=form.facebook.errors %}#}
+{#                </div>#}
+{#            </div>#}
+{##}
+{#            <div class="mb-3 row">#}
+{#                <label for="id_password" class="col-sm-2 col-form-label">Password</label>#}
+{#                <div class="col-sm-10">#}
+{#                    <input type="password" {% if not active %} required {% endif %} name="password"#}
+{#                           class="form-control {% if form.password.errors %}is-invalid{% endif %}" id="id_password"#}
+{#                           placeholder="Enter a strong a password">#}
+{#                    {% include 'component/form.html' with errors=form.password.errors %}#}
+{#                </div>#}
+{#            </div>#}
+{##}
+{#            <div class="mb-3 row">#}
+{#                <label for="id_confirm_password" class="col-sm-2 col-form-label">Confirm Password</label>#}
+{#                <div class="col-sm-10">#}
+{#                    <input type="password" {% if not active %} required {% endif %} name="confirm_password"#}
+{#                           class="form-control {% if form.confirm_password.errors %}is-invalid{% endif %}"#}
+{#                           id="id_confirm_password" placeholder="Confirm your password">#}
+{#                    {% include 'component/form.html' with errors=form.confirm_password.errors %}#}
+{#                </div>#}
+{#            </div>#}
+{#            <button type="submit" class="btn btn-primary">{% if active %}Update Profile{% else %}Create#}
+{#                Profile{% endif %}</button>#}
+
