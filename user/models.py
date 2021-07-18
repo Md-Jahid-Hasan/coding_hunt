@@ -3,6 +3,14 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, Permis
 from django.conf import settings
 
 
+class ClubPosition(models.Model):
+    role = models.CharField(max_length=20)
+    active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.role
+
+
 class UserManager(BaseUserManager):
     """User Manager class for create and update user and superuser"""
 
@@ -35,13 +43,23 @@ class User(AbstractBaseUser, PermissionsMixin):
     picture = models.URLField(max_length=255)
 
     role = models.CharField(max_length=1, choices=UNIVERSITY_ROLE, null=True)
+    club_role = models.ForeignKey(ClubPosition, null=True, on_delete=models.SET_NULL,
+                                  limit_choices_to={'active': True})
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
 
-    github = models.URLField(max_length=100, null=True)
-    linkedIn = models.URLField(max_length=100, null=True)
-    facebook = models.URLField(max_length=100, null=True, blank=True)
+    bio = models.CharField(max_length=100, null=True)
 
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
+
+
+class Link(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    github = models.URLField(max_length=100, null=True)
+    linkedIn = models.URLField(max_length=100, null=True)
+    facebook = models.URLField(max_length=100, null=True, blank=True)
+
+    def __str__(self):
+        return self.user.name

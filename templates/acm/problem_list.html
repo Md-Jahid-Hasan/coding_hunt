@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titleblock %}
+    <title>Problem List</title>
+{% endblock %}
+
+{% block navblock %}
+    <a class="btn btn-primary m-1" href="{% url 'acm:user_by_division' %}">Solve Details</a>
+{% endblock %}
+
+{% block mainblock %}
+
+    <div class="row">
+        <div class="col-sm-4">Select Division</div>
+        <div class="col-sm-8">
+            <select class="form-select mb-3" aria-label="Default select example">
+                {#        <option selected>Open this select menu</option>#}
+                <option value="1">Blue</option>
+                <option value="2">Green</option>
+                <option value="3">Red</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            {% include 'component/acm_problem_table.html' with problems=green %}
+        </div>
+        <div class="col-md-4">
+            {% include 'component/acm_problem_table.html' with problems=blue %}
+        </div>
+        <div class="col-md-4">
+            {% include 'component/acm_problem_table.html' with problems=red %}
+        </div>
+        {% for problem in problems %}
+
+        {% endfor %}
+    </div>
+{% endblock %}

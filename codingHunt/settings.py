@@ -39,8 +39,11 @@ INSTALLED_APPS = [
     "django.contrib.sites",
 
     'social_django',
+    'rest_framework',
 
+    'frontend',
     'user',
+    'acm',
 ]
 
 MIDDLEWARE = [
@@ -140,7 +143,6 @@ SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.social_auth.associate_user',
     'social_core.pipeline.social_auth.load_extra_data',
     'social_core.pipeline.user.user_details',
-    #'user.pipeline.get_email',
 )
 
 STATIC_URL = '/static/'

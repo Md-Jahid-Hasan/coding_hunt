@@ -1,5 +1,9 @@
 from django import forms
 from django.contrib.auth import get_user_model
+from .models import Link
+from django.forms import inlineformset_factory
+
+from acm.models import UserOnlineJudge, JudgeName
 
 
 class UserProfileUpdateForm(forms.ModelForm):
@@ -8,13 +12,11 @@ class UserProfileUpdateForm(forms.ModelForm):
 
     class Meta:
         model = get_user_model()
-        fields = ['student_id', 'github', 'linkedIn', 'facebook']
+        fields = ['student_id']
+        # fields = ['student_id', 'github', 'linkedIn', 'facebook']
 
         help_texts = {
             'student_id': "Enter your university ID",
-            'github': "Enter your github profile link",
-            'linkedIn': "Enter your LinkedIn profile link",
-            'facebook': "Enter Your Facebook profile link",
         }
 
     def __init__(self, *args, **kwargs):
@@ -25,18 +27,6 @@ class UserProfileUpdateForm(forms.ModelForm):
         if user.is_active:
             self.fields['password'].required = False
             self.fields['confirm_password'].required = False
-
-    def clean_github(self):
-        link = self.cleaned_data.get('github')
-        return link
-
-    def clean_linkedIn(self):
-        link = self.cleaned_data.get('linkedIn')
-        return link
-
-    def clean_facebook(self):
-        link = self.cleaned_data.get('facebook')
-        return link
 
     def clean(self):
         user = self.instance
@@ -63,4 +53,38 @@ class UserProfileUpdateForm(forms.ModelForm):
             user.save()
 
         return user
+
+
+class LinkForm(forms.ModelForm):
+    class Meta:
+        model = Link
+        exclude = ['user']
+
+        help_texts = {
+            'github': "Enter your github profile link",
+            'linkedIn': "Enter your LinkedIn profile link",
+            'facebook': "Enter Your Facebook profile link",
+        }
+
+    def clean_github(self):
+        link = self.cleaned_data.get('github')
+        return link
+
+    def clean_linkedIn(self):
+        link = self.cleaned_data.get('linkedIn')
+        return link
+
+    def clean_facebook(self):
+        link = self.cleaned_data.get('facebook')
+        return link
+
+
+class Testing(forms.ModelForm):
+    class Meta:
+        model = UserOnlineJudge
+        fields = ['name', 'link']
+
+
+TestForm = inlineformset_factory(Link, UserOnlineJudge, form=Testing, extra=1, can_delete=False)
+
 

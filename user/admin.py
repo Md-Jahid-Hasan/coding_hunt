@@ -12,8 +12,8 @@ class AdminControl(UserAdmin):
         (None, {'fields': ('email', 'password')}),
         (_('Personal Info'), {'fields': ('name', 'picture', 'student_id')}),
         (_('Permission'), {'fields': ('is_active', 'is_staff', 'is_superuser')}),
-        (_('Role'), {'fields': ('role',)}),
-        (_('Social'), {'fields': ('github', 'linkedIn', 'facebook')})
+        (_('Role'), {'fields': ('role', 'club_role')}),
+        (_('Social'), {'fields': ('bio',)})
     )
     add_fieldsets = (
         (None, {
@@ -23,4 +23,11 @@ class AdminControl(UserAdmin):
     )
 
 
+class PositionControl(admin.ModelAdmin):
+    ordering = ['-active']
+    list_display = ['role', 'active']
+
+
 admin.site.register(models.User, AdminControl)
+admin.site.register(models.ClubPosition, PositionControl)
+admin.site.register(models.Link)

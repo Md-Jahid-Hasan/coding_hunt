@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block titleblock %}
+    <title>User solve</title>
+{% endblock %}
+
+{% block mainblock %}
+    <table class="table table-bordered border-primary">
+        <thead>
+        <tr>
+            <th scope="col">No.</th>
+            <th scope="col">User</th>
+            <th scope="col">User Total solved </th>
+            <th scope="col">Who solved this?</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+        <tr>
+            <th scope="row">1</th>
+            <td>{{ user.name }}</td>
+            <td>{{  user.problemdetails_set.all.count }}</td>
+            <td><a class="btn btn-primary" href="{% url 'acm:problem_by_user' user.pk %}">Watch</a></td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

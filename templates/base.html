@@ -3,20 +3,43 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="icon" href="{% static 'favicon.png' %}">
-
+    <link rel="icon" href="">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
-    {% block titleblock %}
-    {% endblock %}
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+          integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+</head>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+        crossorigin="anonymous"></script>
+{% block titleblock %}
+{% endblock %}
 </head>
 <body>
+<div class="container">
+    <nav class="navbar navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'user:home' %}">
+                <img src="{% static 'favicon.png' %}" alt="" width="30" height="24">
+            </a>
 
-    <div class="container">
-        {% block mainblock %}
-        {% endblock %}
-    </div>
+            <div class="d-flex">
+                <a class="btn btn-primary m-1" href="{% url 'acm:problem_list' %}">ACM</a>
+
+                {% block navblock %}
+                {% endblock %}
+
+                {% if request.user.is_authenticated %}
+                    <a class="btn btn-primary m-1" href="{% url 'user:user_details' request.user.pk %}">Profile</a>
+                    <a class="btn btn-primary m-1" href="{% url 'user:logout' %}">Log Out</a>
+                {% else %}
+                    <a class="btn btn-primary m-1" href="{% url 'user:login' %}">Log In/Register</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+    {% block mainblock %}
+    {% endblock %}
+</div>
 </body>
 </html>

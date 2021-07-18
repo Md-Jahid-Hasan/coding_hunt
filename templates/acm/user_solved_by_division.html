@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block mainblock %}
+    <div class="row">
+        <form name="search_form" action="{% url 'acm:user_by_division' %}" method="post">
+            <div class="row">
+                {% csrf_token %}
+                <div class="col-sm-2 col-md-2 text-center">
+                    <label class="col-form-label fw-bold">Who Solve</label>
+                </div>
+
+                <div class="col-sm-3 col-md-3 p-0">
+                    <select class="form-select mb-3" required name="condition">
+                        {#        <option selected>Open this select menu</option>#}
+                        <option value="lt">Less then</option>
+                        <option value="gt">Greater then</option>
+                    </select>
+                </div>
+
+                <div class="col-sm-3 col-md-3">
+                    <input type="number" name="number" class="form-control" value="0">
+                </div>
+
+                <div class="col-sm-4 col-md-4 p-0">
+                    <select class="form-select mb-3" onchange="form.submit();" name="division" required>
+                        <option selected>Select Division</option>
+                        <option value="G">Green</option>
+                        <option value="B">Blue</option>
+                        <option value="R">Red</option>
+                    </select>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            {% include 'component/user_solved_by_division_table.html' with users=green_user %}
+        </div>
+        <div class="col-md-4">
+            {% include 'component/user_solved_by_division_table.html' with users=blue_user %}
+        </div>
+        <div class="col-md-4">
+            {% include 'component/user_solved_by_division_table.html' with users=red_user %}
+        </div>
+    </div>
+
+    <script>
+
+    </script>
+{% endblock %}

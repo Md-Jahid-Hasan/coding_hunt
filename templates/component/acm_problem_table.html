@@ -1,0 +1,22 @@
+<table class="table table-bordered border-primary">
+    <thead>
+    <tr>
+        <th scope="col">No.</th>
+        <th scope="col">Problem</th>
+        <th scope="col">Total solved</th>
+        <th scope="col">Solved in this semester</th>
+        <th scope="col">Who solved this?</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for problem in problems %}
+        <tr>
+            <th scope="row">1</th>
+            <td>{{ problem.name }} ({{ problem.get_division_display }})</td>
+            <td>{{ problem.user_solved }}</td>
+            <td>{{ problem.semester_solved }}</td>
+            <td><a class="btn btn-primary" href="{% url 'acm:user_by_problem' problem.pk %}">Watch</a></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
